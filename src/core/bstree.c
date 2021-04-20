@@ -159,8 +159,19 @@ void bstree_inorder_print(bsnode *x) {
 }
 
 void bstree_level_print(bsnode *x) {
-    queue *q = queue_create();
-
+    int type_size = sizeof(bsnode *);
+    queue *q = queue_create(type_size);
+    queue_enqueue(q, (void *) x);
+    while (!queue_empty(q)) {
+        bsnode *temp = (bsnode *) queue_dequeue(q);
+        printf("%d\n", temp->key);
+        if (temp->left) {
+            queue_enqueue(q, (void *) temp->left);
+        }
+        if (temp->right) {
+            queue_enqueue(q, (void *) temp->right);
+        }
+    }
 }
 
 bstree *bstree_create(void) {

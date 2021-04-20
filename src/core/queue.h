@@ -12,24 +12,25 @@
 #define QUEUE_INIT_SIZE 8
 
 struct queue {
-    int *arr;
+    void *arr;
     int front;//队头指针
     int rear;//队尾指针
     int size;//存储数据的个数
     int cap;//队列容量
+    int type_size;//元素类型大小，如果是int，则为sizeof(int)
 };
 
 typedef struct queue queue;
 
-queue *queue_create(void);
+queue *queue_create(int type_size);
 
-void queue_enqueue(queue *q, int x);
+void queue_enqueue(queue *q, void *x);
 
-int queue_dequeue(queue *q);
+void *queue_dequeue(queue *q);
 
 int queue_empty(queue *q);
 
-int queue_head(queue *q);
+void *queue_head(queue *q);
 
 void queue_print(queue *q);
 
