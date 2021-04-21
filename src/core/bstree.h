@@ -15,6 +15,7 @@ struct bsnode {
     struct bsnode *right;//右孩子
     struct bsnode *p;//父亲
     int key;
+    int level_end_flag;
 };
 
 typedef struct bsnode bsnode;
@@ -32,9 +33,9 @@ void bstree_insert(bstree *t, bsnode *z);
 void bstree_delete(bstree *t, bsnode *z);
 
 //中序遍历
-void bstree_inorder_print(bsnode *x);
+void bstree_inorder_print(bstree *t);
 
-void bstree_level_print(bsnode *x);
+void bstree_level_print(bstree *t);
 
 //创建一个空树
 bstree *bstree_create(void);
@@ -47,5 +48,11 @@ bsnode *bstree_minimum(bsnode *x);
 
 //找到树中值最大的节点
 bsnode *bstree_maximum(bsnode *x);
+
+//创建一个level end节点
+bsnode *bstree_create_level_end();
+
+//判断是否是一个level end节点
+int bstree_is_level_end(bsnode *x);
 
 #endif //CLIB_BSTREE_H

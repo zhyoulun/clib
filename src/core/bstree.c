@@ -27,7 +27,7 @@ void bstree_insert(bstree *t, bsnode *z) {
 }
 
 //把t中u子树，和v子树的位置互换
-//useless
+//useless，这个函数没有用
 void bstree_exchange(bstree *t, bsnode *u, bsnode *v) {
     if (u->p == NULL) {//u为t的根节点
         t->root = v;
@@ -124,6 +124,7 @@ void bstree_delete(bstree *t, bsnode *z) {
 //            }
 //        }
     } else {//z的left和right均不为null
+        //todo 这个else里边有bug，需要在脑子清醒的时候调试下
         bsnode *y = z->right;
         if (y->left == NULL) {//z的右子树，根节点的左子树就null
             bstree_transplant(t, z, y);
@@ -147,29 +148,41 @@ void bstree_inorder_print_1(bsnode *x, int depth) {
     if (x != NULL) {
         bstree_inorder_print_1(x->left, depth + 1);
         for (int i = 0; i < depth; i++) {
-            printf(" ");
+            printf("  ");
         }
         printf("%d\n", x->key);
         bstree_inorder_print_1(x->right, depth + 1);
     }
 }
 
-void bstree_inorder_print(bsnode *x) {
-    bstree_inorder_print_1(x, 0);
+void bstree_inorder_print(bstree *t) {
+    printf("---------------------------\n");
+    bstree_inorder_print_1(t->root, 0);
 }
 
-void bstree_level_print(bsnode *x) {
-    int type_size = sizeof(bsnode *);
-    queue *q = queue_create(type_size);
+void bstree_level_print(bstree *t) {
+    printf("---------------------------\n");
+    bsnode *x = t->root;
+    queue *q = queue_create(sizeof(bsnode));
+    bsnode *level_end = bstree_create_level_end();
     queue_enqueue(q, (void *) x);
+    queue_enqueue(q, (void *) level_end);
     while (!queue_empty(q)) {
         bsnode *temp = (bsnode *) queue_dequeue(q);
-        printf("%d\n", temp->key);
+        printf("%d ", temp->key);
+
         if (temp->left) {
             queue_enqueue(q, (void *) temp->left);
         }
         if (temp->right) {
             queue_enqueue(q, (void *) temp->right);
+        }
+
+        bsnode *top = (bsnode *) queue_head(q);
+        if (top != NULL && bstree_is_level_end(top)) {
+            printf("\n");
+            queue_dequeue(q);
+            queue_enqueue(q, (void *) level_end);
         }
     }
 }
@@ -201,4 +214,14 @@ bsnode *bstree_maximum(bsnode *x) {
         x = x->right;
     }
     return x;
+}
+
+bsnode *bstree_create_level_end() {
+    bsnode *x = bstree_create_bsnode();
+    x->level_end_flag = 1;
+    return x;
+}
+
+int bstree_is_level_end(bsnode *x) {
+    return x->level_end_flag == 1;
 }

@@ -11,6 +11,10 @@
 
 #define QUEUE_INIT_SIZE 8
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct queue {
     void *arr;
     int front;//队头指针
@@ -34,5 +38,8 @@ void *queue_head(queue *q);
 
 void queue_print(queue *q);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif //CLIB_QUEUE_H

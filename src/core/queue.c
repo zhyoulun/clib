@@ -73,7 +73,11 @@ int queue_empty(queue *q) {
 }
 
 void *queue_head(queue *q) {
-    assert(q->size > 0);
+//    assert(q->size > 0);
+    if (q->size == 0) {
+        return NULL;
+    }
+
     int index = (q->front + 1) % q->cap;
 //    return q->arr[index];
     void *res = (void *) malloc(q->type_size);
@@ -82,6 +86,7 @@ void *queue_head(queue *q) {
 }
 
 void queue_print(queue *q) {
+    //todo 补充一个通用的print方法
 //    int index = q->front;
 //    printf("queue: ");
 //    for (int i = 0; i < q->size; i++) {

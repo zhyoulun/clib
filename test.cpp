@@ -19,9 +19,19 @@ TEST(HelloTest, BasicAssertions) {
 TEST(BinarySearchTreeTest, BasicAssertions) {
     bstree *t = bstree_create();
     int a[] = {4, 3, 5, 7, 1, 8, 10, 2, 6, 9};
+    bsnode *ten_node;
+    bsnode *eight_node;
+    bsnode *four_node;
     for (int i = 0; i < 10; i++) {
         bsnode *z = bstree_create_bsnode();
         z->key = a[i];
+        if (a[i] == 10) {
+            ten_node = z;
+        } else if (a[i] == 8) {
+            eight_node = z;
+        } else if (a[i] == 4) {
+            four_node = z;
+        }
         bstree_insert(t, z);
 //        bstree_inorder_print(t->root);
 //        printf("------------------------\n");
@@ -29,9 +39,116 @@ TEST(BinarySearchTreeTest, BasicAssertions) {
     bsnode *z = bstree_create_bsnode();
     z->key = 20;
     bstree_insert(t, z);
-//    bstree_inorder_print(t->root);
-    bstree_level_print(t->root);
+    bstree_inorder_print(t);
+    bstree_level_print(t);
+    bstree_delete(t, ten_node);
+    bstree_inorder_print(t);
+    bstree_delete(t, eight_node);
+    bstree_inorder_print(t);
+    bstree_delete(t, four_node);
+    bstree_inorder_print(t);
 }
+
+TEST(BinarySearchTreeTest2, BasicAssertions) {
+    bstree *t = bstree_create();
+    bsnode *z = bstree_create_bsnode();
+    z->key = 1;
+    bstree_insert(t, z);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root->key, 1);
+    bstree_delete(t, z);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root, (bsnode *) NULL);
+}
+
+TEST(BinarySearchTreeTest3, BasicAssertions) {
+    bstree *t = bstree_create();
+    bsnode *one_node = bstree_create_bsnode();
+    one_node->key = 1;
+    bstree_insert(t, one_node);
+    bsnode *two_node = bstree_create_bsnode();
+    two_node->key = 2;
+    bstree_insert(t, two_node);
+
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root->key, 1);
+    bstree_delete(t, one_node);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root, two_node);
+}
+
+TEST(BinarySearchTreeTest4, BasicAssertions) {
+    bstree *t = bstree_create();
+    bsnode *one_node = bstree_create_bsnode();
+    one_node->key = 1;
+    bstree_insert(t, one_node);
+    bsnode *two_node = bstree_create_bsnode();
+    two_node->key = 2;
+    bstree_insert(t, two_node);
+
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root->key, 1);
+    bstree_delete(t, two_node);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root, one_node);
+}
+
+TEST(BinarySearchTreeTest5, BasicAssertions) {
+    bstree *t = bstree_create();
+    bsnode *three_node = bstree_create_bsnode();
+    three_node->key = 3;
+    bstree_insert(t, three_node);
+    bsnode *two_node = bstree_create_bsnode();
+    two_node->key = 2;
+    bstree_insert(t, two_node);
+
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root->key, 3);
+    bstree_delete(t, two_node);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root, three_node);
+}
+
+
+TEST(BinarySearchTreeTest6, BasicAssertions) {
+    bstree *t = bstree_create();
+    bsnode *three_node = bstree_create_bsnode();
+    three_node->key = 3;
+    bstree_insert(t, three_node);
+    bsnode *two_node = bstree_create_bsnode();
+    two_node->key = 2;
+    bstree_insert(t, two_node);
+    bsnode *one_node = bstree_create_bsnode();
+    one_node->key = 1;
+    bstree_insert(t, one_node);
+
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root->key, 3);
+    bstree_delete(t, two_node);
+    bstree_inorder_print(t);
+    EXPECT_EQ(t->root, three_node);
+}
+
+//TEST(BinarySearchTreeTest7, BasicAssertions) {
+//    bstree *t = bstree_create();
+//    int a[] = {4, 3, 5, 7, 1, 80, 100, 2, 6, 90, 75};
+//    bsnode *seven_node;
+//    for (int i = 0; i < 11; i++) {
+//        bsnode *z = bstree_create_bsnode();
+//        z->key = a[i];
+//        if (a[i] == 7) {
+//            seven_node = z;
+//        }
+//        bstree_insert(t, z);
+//    }
+////    bsnode *z = bstree_create_bsnode();
+////    z->key = 20;
+////    bstree_insert(t, z);
+//    bstree_inorder_print(t);
+//    bstree_delete(t, seven_node);
+//    bstree_inorder_print(t);
+//}
+
 
 TEST(StackTest, BasicAssertions) {
     stack *s = stack_create();
