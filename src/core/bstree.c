@@ -164,9 +164,9 @@ void bstree_level_print(bstree *t) {
     printf("---------------------------\n");
     bsnode *x = t->root;
     queue *q = queue_create(sizeof(bsnode));
-    bsnode *level_end = bstree_create_level_end();
+//    bsnode *level_end = bstree_create_level_end();
     queue_enqueue(q, (void *) x);
-    queue_enqueue(q, (void *) level_end);
+//    queue_enqueue(q, (void *) level_end);
     while (!queue_empty(q)) {
         bsnode *temp = (bsnode *) queue_dequeue(q);
         printf("%d ", temp->key);
@@ -178,12 +178,12 @@ void bstree_level_print(bstree *t) {
             queue_enqueue(q, (void *) temp->right);
         }
 
-        bsnode *top = (bsnode *) queue_head(q);
-        if (top != NULL && bstree_is_level_end(top)) {
-            printf("\n");
-            queue_dequeue(q);
-            queue_enqueue(q, (void *) level_end);
-        }
+//        bsnode *top = (bsnode *) queue_head(q);
+//        if (top != NULL && bstree_is_level_end(top)) {
+//            printf("\n");
+//            queue_dequeue(q);
+////            queue_enqueue(q, (void *) level_end);
+//        }
     }
 }
 
